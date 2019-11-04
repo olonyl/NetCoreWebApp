@@ -1,0 +1,29 @@
+﻿@model IEnumerable<WebApp.ViewModels.Prestamo>
+
+@{
+    ViewData["Title"] = "Lista de Prestamos";
+}
+
+<h4>Listado de Prestamos</h4>
+<hr />
+<p>
+    <a href="prestamo/create" class="btn btn-info">
+        Create New
+        <i class='fas fa-plus ml-1'></i>
+    </a>
+</p>
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Lector.Nombre).Titled("Estudiante");
+        columns.Add(model => model.Libro.Titulo).Titled("Libro");
+        columns.Add(model => model.FechaPrestamo).Titled("F. Prestamo").Formatted("{0:dd/MM/yyyy}");
+        columns.Add(model => model.FechaDevolucion).Titled("F. Devolver").Formatted("{0:dd/MM/yyyy}");
+        columns.Add(model => Html.CheckBox("Devuelto_" + model.Devuelto, model.Devuelto, new { @disabled = "disabled" })).Titled("Devuelto?").Css("text-center");
+    })
+    .Empty("No data found")
+    .Filterable()
+    .Sortable()
+    .Pageable()
+)

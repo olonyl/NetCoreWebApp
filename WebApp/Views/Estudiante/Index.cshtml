@@ -1,0 +1,35 @@
+﻿@model IEnumerable<WebApp.ViewModels.Estudiante>
+
+@{
+    ViewData["Title"] = "Lista de Estudiantes";
+}
+
+<h4>Listado de Estudiantes</h4>
+<hr />
+<p>
+    <a href="estudiante/create" class="btn btn-info">
+        Create New
+        <i class='fas fa-plus ml-1'></i>
+    </a>   
+</p>
+@(Html
+                    .Grid(Model)
+                    .Build(columns =>
+                    {
+                        columns.Add(model =>
+                            $"<a class='btn btn-danger btn-sm mr-1' href='estudiante/delete/{model.IdLector}'><i class='fas fa-trash-alt'></i></a>" +
+                            $"<a class='btn btn-info btn-sm mr-1' href='estudiante/edit/{model.IdLector}'><i class='fas fa-pen'></i></a>"
+                        ).Encoded(false);
+                        columns.Add(model => model.CI).Titled("CI");
+                        columns.Add(model => model.Nombre).Titled("Nombre");
+                        columns.Add(model => model.Dierccion).Titled("Direccion");
+                        columns.Add(model => model.Carrera).Titled("Carrera");
+                        columns.Add(model => model.Edad).Titled("Edad");
+                    })
+                    .Empty("No data found")
+                    .Filterable()
+                    .Sortable()
+                    .Pageable()
+)
+
+
